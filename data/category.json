@@ -1,0 +1,22 @@
+[
+  {
+      "name": "Animals",
+      "description": "It's so fluffy I'm gonna die!"
+  },
+  {
+      "name": "Technology",
+      "description": "Tech, programming, IT related"
+  },
+  {
+      "name": "Anime & Manga",
+      "description": "Weeb rule the world"
+  },
+  {
+      "name": "School",
+      "description": "Its happy to be young"
+  },
+  {
+      "name": "Random",
+      "description": "Why so serious"
+  }
+]

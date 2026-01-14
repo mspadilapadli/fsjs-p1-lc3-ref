@@ -1,0 +1,42 @@
+[
+    {
+        "author": "Padila",
+        "title": "Apa aja boleh",
+        "imageURL": "ini gambar",
+        "votes": 0,
+        "isFunny": false,
+        "CategoryId": 1
+    },
+    {
+        "author": "Padli",
+        "title": "Hykiuu",
+        "imageURL": "ini url image",
+        "votes": 0,
+        "isFunny": "false",
+        "CategoryId": 2
+    },
+    {
+        "author": "Acong",
+        "title": "Tedeccer",
+        "imageURL": "ini url image",
+        "votes": 0,
+        "isFunny": "false",
+        "CategoryId": 3
+    },
+    {
+        "author": "Diablo",
+        "title": "BNAH",
+        "imageURL": "ini url image",
+        "votes": 0,
+        "isFunny": "false",
+        "CategoryId": 4
+    },
+    {
+        "author": "Pafaj",
+        "title": "Demon Slayer",
+        "imageURL": "ini url image",
+        "votes": 0,
+        "isFunny": "false",
+        "CategoryId": 5
+    }
+]
