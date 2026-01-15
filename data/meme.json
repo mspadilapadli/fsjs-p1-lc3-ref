@@ -27,15 +27,15 @@
         "author": "Diablo",
         "title": "BNAH",
         "imageURL": "ini url image",
-        "votes": 0,
-        "isFunny": "false",
+        "votes": 1,
+        "isFunny": "true",
         "CategoryId": 4
     },
     {
         "author": "Pafaj",
         "title": "Demon Slayer",
         "imageURL": "ini url image",
-        "votes": 0,
+        "votes": 1,
         "isFunny": "false",
         "CategoryId": 5
     }

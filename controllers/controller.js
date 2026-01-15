@@ -3,6 +3,21 @@ const { Meme, Category } = require("../models");
 class Controller {
     static async readMemes(req, res) {
         try {
+            let memes = await Meme.findAll({
+                include: {
+                    model: Category,
+                    attributes: ["name"],
+                },
+            });
+            res.render("memes", { memes });
+            //experiment
+            // const memeswithStatus = memes.map((e) => {
+            //     e.status = e.showStatus();
+            //     return e;
+            // });
+            // const status = memes.showStatus();
+            // console.log(memeswithStatus);
+            // res.send(memeswithStatus);
         } catch (error) {
             console.log(error);
             res.send(error);

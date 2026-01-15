@@ -15,7 +15,7 @@
       <div class="container">
 
          <div class="my-3">
-            <a href="/stores/add" class="btn btn-info">Add Category</a>
+            <a href="/memes/add" class="btn btn-info">Add Meme</a>
          </div>
          <nav class="navbar navbar-light bg-light">
             <form method="get" class="form-inline d-flex">
@@ -26,9 +26,11 @@
          <table class="table  table-striped">
             <thead>
                <tr class="table-info">
-                  <th scope="col">Id</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Description</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Caption</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Published</th>
                   <th scope="col">Action</th>
 
 
@@ -36,19 +38,25 @@
             </thead>
             <tbody>
 
-               <% categories.forEach((category,i)=> {%>
+               <% memes.forEach((meme,i)=> {%>
                   <tr>
                      <th>
-                        <%= category.id %>
-                     </th>
+                        <img src="<%= meme.imageURL %>" alt="ini gambar">
+
                      <td>
-                        <%= category.name %>
+                        <%= meme.caption %>
                      </td>
                      <td>
-                        <%= category.description %>
+                        <%= meme.Category.name %>
                      </td>
                      <td>
-                        <a href="/categories/<%= category.id %>" class="btn btn-sm btn-info">Detail</a>
+                        <%= meme.showStatus() %>
+                     </td>
+                     <td>
+                        <%= "Published" %>
+                     </td>
+                     <td>
+                        <a href="/memes/delete/<%= meme.id %>" class="btn btn-sm btn-info">Delete</a>
                      </td>
 
                   </tr>
