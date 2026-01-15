@@ -11,12 +11,29 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             Meme.belongsTo(models.Category);
         }
+        get caption() {
+            return `${this.title} by ${this.author}`;
+        }
+
+        showStatus() {
+            let status = "";
+            if (!this.votes) {
+                status = `Standard`;
+            } else {
+                if (this.isFunny === false) {
+                    status = `Good`;
+                } else {
+                    status = `Funny`;
+                }
+            }
+            return status;
+        }
     }
     Meme.init(
         {
             author: DataTypes.STRING,
             title: DataTypes.STRING,
-            imageUrl: DataTypes.STRING,
+            imageURL: DataTypes.STRING,
             votes: DataTypes.INTEGER,
             isFunny: DataTypes.BOOLEAN,
             CategoryId: DataTypes.INTEGER,
