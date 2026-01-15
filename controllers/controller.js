@@ -43,6 +43,16 @@ class Controller {
     }
     static async showForm(req, res) {
         try {
+            let categories = await Category.findAll();
+            let action = `memes/add`;
+            let isEdit = false;
+            res.render("show-form", {
+                categories,
+                isEdit,
+                action,
+                errors: {},
+                meme: {},
+            });
         } catch (error) {
             console.log(error);
             res.send(error);
