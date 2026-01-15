@@ -1,0 +1,8 @@
+npx sequelize model:create --name  Category --attributes name:string,description:string
+npx sequelize model:create --name Meme --attributes author:string,title:string,imageUrl:string,votes:integer,isFunny:boolean
+
+npx sequelize migration:create --name add-CategoryId-to-meme
+
+
+npx sequelize seed:create --name seed-categories
+npx sequelize seed:create --name seed-memes
