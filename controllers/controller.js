@@ -70,6 +70,16 @@ class Controller {
     }
     static async vote(req, res) {
         try {
+            let { id } = req.params;
+            // res.send(`ini vote meme`);
+
+            await Meme.increment(
+                { votes: 1 },
+                {
+                    where: { id },
+                }
+            );
+            res.redirect(`/categories/${id}`);
         } catch (error) {
             console.log(error);
             res.send(error);
