@@ -64,7 +64,18 @@ class Controller {
             await Meme.create({ title, author, imageURL, CategoryId });
             res.redirect(`/`);
         } catch (error) {
-            console.log(error);
+            const errors = helper.formatValdiateErrors(error);
+            if (errors) {
+                let authors = await Author.findAll();
+                return res.render("show-form", {
+                    book: req.body,
+                    authors,
+                    action: `/books/add`,
+                    isEdit: false,
+                    errors,
+                });
+            }
+            res.send(error);
             res.send(error);
         }
     }
