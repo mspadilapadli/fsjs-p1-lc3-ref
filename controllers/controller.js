@@ -60,6 +60,9 @@ class Controller {
     }
     static async postAdd(req, res) {
         try {
+            let { title, author, imageURL, CategoryId } = req.body;
+            await Meme.create({ title, author, imageURL, CategoryId });
+            res.redirect(`/`);
         } catch (error) {
             console.log(error);
             res.send(error);
