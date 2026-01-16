@@ -9,6 +9,12 @@ const helper = {
         }
         return null;
     },
+    formatTime(dateInput) {
+        let publised = new Date() - dateInput;
+        publised = publised / 1000;
+        let minutes = publised / 60;
+        return minutes;
+    },
 };
 
 module.exports = helper;
