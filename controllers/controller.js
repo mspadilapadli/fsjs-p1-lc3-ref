@@ -87,6 +87,17 @@ class Controller {
     }
     static async funny(req, res) {
         try {
+            let { id } = req.params;
+            await Meme.update(
+                { isFunny: true },
+                {
+                    where: {
+                        id,
+                    },
+                }
+            );
+            // res.send(`ini funny`);
+            res.redirect(`/categories/${id}`);
         } catch (error) {
             console.log(error);
             res.send(error);
