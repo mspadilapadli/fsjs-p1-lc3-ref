@@ -36,6 +36,24 @@ class Controller {
     }
     static async detailMeme(req, res) {
         try {
+            // console.log(req.params);
+            let { id } = req.params;
+            // res.send(`ini read category Id`)
+            let data = await Category.findByPk(id, {
+                include: {
+                    model: Meme,
+                    where: {
+                        isFunny: false,
+                    },
+                    order: [["name", "ASC"]],
+                },
+            });
+            // console.log(data);
+            // res.send(data);
+            res.render("show-categoryId", {
+                title: `List Meme by Category`,
+                data,
+            });
         } catch (error) {
             console.log(error);
             res.send(error);
