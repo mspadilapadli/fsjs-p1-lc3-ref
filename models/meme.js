@@ -74,6 +74,12 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: "Meme",
+            hooks: {
+                beforeCreate(value, potion) {
+                    value.votes = 0;
+                    value.isFunny = false;
+                },
+            },
         }
     );
     return Meme;
