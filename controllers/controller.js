@@ -1,3 +1,4 @@
+const helper = require("../helper");
 const { Meme, Category } = require("../models");
 
 class Controller {
@@ -14,7 +15,7 @@ class Controller {
             // const memeswithStatus = memes.map((e) => {
             //     e.status = e.showStatus();
             //     return e;
-            // });
+            // });63
             // const status = memes.showStatus();
             // console.log(memeswithStatus);
             // res.send(memeswithStatus);
@@ -62,7 +63,7 @@ class Controller {
     static async showForm(req, res) {
         try {
             let categories = await Category.findAll();
-            let action = `memes/add`;
+            let action = `/memes/add`;
             let isEdit = false;
             res.render("show-form", {
                 categories,
@@ -76,7 +77,7 @@ class Controller {
             res.send(error);
         }
     }
-    static async postAdd(req, res) {
+    static async postAddMeme(req, res) {
         try {
             let { title, author, imageURL, CategoryId } = req.body;
             await Meme.create({ title, author, imageURL, CategoryId });
@@ -84,16 +85,24 @@ class Controller {
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
             if (errors) {
-                let authors = await Author.findAll();
+                let categories = await Category.findAll();
                 return res.render("show-form", {
-                    book: req.body,
-                    authors,
-                    action: `/books/add`,
+                    meme: req.body,
+                    categories,
+                    action: `/memes/add`,
                     isEdit: false,
                     errors,
                 });
             }
+
             res.send(error);
+        }
+    }
+
+    static async postEditMeme(req, res) {
+        try {
+        } catch (error) {
+            console.log(error);
             res.send(error);
         }
     }
@@ -106,7 +115,7 @@ class Controller {
                 { votes: 1 },
                 {
                     where: { id },
-                }
+                },
             );
             res.redirect(`/categories/${id}`);
         } catch (error) {
@@ -123,7 +132,7 @@ class Controller {
                     where: {
                         id,
                     },
-                }
+                },
             );
             // res.send(`ini funny`);
             res.redirect(`/categories/${id}`);
