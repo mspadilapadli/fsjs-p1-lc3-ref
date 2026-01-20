@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
                         msg: `Author is required `,
                     },
                     notNull: {
-                        msg: `Author is required `,
+                        msg: `Author cannot be null `,
                     },
                 },
             },
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
                         msg: `Title is required `,
                     },
                     notNull: {
-                        msg: `Title is required `,
+                        msg: `Title cannot be null `,
                     },
                 },
             },
@@ -63,13 +63,27 @@ module.exports = (sequelize, DataTypes) => {
                         msg: `Image is required `,
                     },
                     notNull: {
-                        msg: `Image is required `,
+                        msg: `Image cannot be null `,
                     },
                 },
             },
             votes: DataTypes.INTEGER,
             isFunny: DataTypes.BOOLEAN,
-            CategoryId: DataTypes.INTEGER,
+            CategoryId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                validate: {
+                    isInt: {
+                        msg: `CategoryId must be a number`,
+                    },
+                    notEmpty: {
+                        msg: `Category is required `,
+                    },
+                    notNull: {
+                        msg: `CategoryId cannot be null `,
+                    },
+                },
+            },
         },
         {
             sequelize,
@@ -80,7 +94,7 @@ module.exports = (sequelize, DataTypes) => {
                     value.isFunny = false;
                 },
             },
-        }
+        },
     );
     return Meme;
 };
