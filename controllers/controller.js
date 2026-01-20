@@ -38,6 +38,8 @@ class Controller {
     static async detailMeme(req, res) {
         try {
             const { id } = req.params;
+
+            const listCategories = await Category.findAll();
             //*try special isntance method sequelize
             const category = await Category.findByPk(id);
             const memes = await category.getMemes({
@@ -52,7 +54,11 @@ class Controller {
                 status: meme.showStatus(),
             }));
 
-            res.render("detail-categoryId", { category, memesWithStatus });
+            res.render("detail-categoryId", {
+                category,
+                memesWithStatus,
+                listCategories,
+            });
         } catch (error) {
             console.log(error);
             res.send(error);
