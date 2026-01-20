@@ -11,7 +11,7 @@ class Controller {
                 },
             });
             res.render("memes", { memes });
-            //experiment
+            // experiment
             // const memeswithStatus = memes.map((e) => {
             //     e.status = e.showStatus();
             //     return e;
@@ -37,24 +37,21 @@ class Controller {
     }
     static async detailMeme(req, res) {
         try {
-            // console.log(req.params);
-            let { id } = req.params;
-            // res.send(`ini read category Id`)
-            let data = await Category.findByPk(id, {
-                include: {
-                    model: Meme,
-                    where: {
-                        isFunny: false,
-                    },
-                    order: [["name", "ASC"]],
+            const { id } = req.params;
+            //*try special isntance method sequelize
+            const category = await Category.findByPk(id);
+            const memes = await category.getMemes({
+                where: {
+                    isFunny: false,
                 },
+                order: [["title", "ASC"]],
             });
-            // console.log(data);
-            // res.send(data);
-            res.render("show-categoryId", {
-                title: `List Meme by Category`,
-                data,
-            });
+            //*experiment
+            const memesWithStatus = memes.map((meme) => ({
+                ...meme.toJSON(),
+                status: meme.showStatus(),
+            }));
+            res.render("detail-categoryId", { category, memesWithStatus });
         } catch (error) {
             console.log(error);
             res.send(error);

@@ -13,14 +13,11 @@
     <%- include('_navbar') %>
         <div class="container">
             <h5>
-                <%= title %>
+                Category : <%= category.name %>
             </h5>
-
-            <div class="mb-4 mt-4">
-                <a href="/memes/add" class="btn btn-primary">Add Meme</a>
+            <div class="my-3">
+                <a href="/memes/add" class="btn btn-info">Add Meme</a>
             </div>
-
-
 
             <table class="table">
                 <thead>
@@ -36,40 +33,33 @@
                 </thead>
                 <tbody>
 
-                    <% data.Memes.forEach((item)=> { %>
+                    <% memesWithStatus.forEach((meme)=> { %>
                         <tr>
 
                             <td>
-                                <img src="<%= item.imageURL %>" alt="ini gambar">
+                                <img src="<%= meme.imageURL %>" alt="ini gambar">
+                            </td>
+                            <td>
+                                <%= meme.title %>
+                            </td>
+                            <td>
+                                <%= meme.author %>
+                            </td>
+                            <td>
+                                <%= meme.votes %>
+                            </td>
+                            <td>
+                                <%= meme.status %>
+                            </td>
+                            <td>
+                                <% if (meme.votes>= 10) { %>
 
-                            </td>
-                            <td>
-                                <%= item.title %>
-                            </td>
-                            <td>
-                                <%= item.author %>
-                            </td>
-                            <td>
-                                <%= item.votes %>
-                            </td>
-                            <td>
-                                <%= item.showStatus() %>
-                            </td>
-                            <td>
-                                <% if (item.votes>= 10) { %>
-
-                                    <a class="btn btn-outline-success" href="/memes/<%= item.id %>/funny">IsFunny</a>
+                                    <a class="btn btn-outline-success" href="/memes/<%= meme.id %>/funny">IsFunny</a>
                                     <% } else { %>
 
-                                        <a class="btn btn-outline-success" href="/memes/<%= item.id %>/vote">Vote</a>
+                                        <a class="btn btn-outline-success" href="/memes/<%= meme.id %>/vote">Vote</a>
                                         <%} %>
                             </td>
-
-
-
-                            <!-- <td>
-                                <a class="btn btn-primary" href="#">Delete</a>
-                            </td> -->
 
                         </tr>
                         <% }) %>
