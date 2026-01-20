@@ -62,15 +62,23 @@ class Controller {
     }
     static async showForm(req, res) {
         try {
+            const { id } = req.params;
             let categories = await Category.findAll();
+            let meme = {};
             let action = `/memes/add`;
             let isEdit = false;
+
+            if (id) {
+                meme = await Meme.findByPk(id);
+                action = `/memes/${id}/edit`;
+                isEdit = true;
+            }
             res.render("show-form", {
                 categories,
                 isEdit,
                 action,
                 errors: {},
-                meme: {},
+                meme,
             });
         } catch (error) {
             console.log(error);
@@ -80,7 +88,8 @@ class Controller {
     static async postAddMeme(req, res) {
         try {
             let { title, author, imageURL, CategoryId } = req.body;
-            await Meme.create({ title, author, imageURL, CategoryId });
+            const payload = { title, author, imageURL, CategoryId };
+            await Meme.create(payload);
             res.redirect(`/`);
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
@@ -100,9 +109,30 @@ class Controller {
     }
 
     static async postEditMeme(req, res) {
+        const { id } = req.params;
         try {
+            let { title, author, imageURL, CategoryId } = req.body;
+            const payload = { title, author, imageURL, CategoryId };
+            const foundMeme = await Meme.findByPk(id);
+            if (!foundMeme) {
+                throw `Data not found!`;
+            }
+            await foundMeme.update(payload);
+
+            res.redirect("/");
         } catch (error) {
-            console.log(error);
+            const errors = helper.formatValdiateErrors(error);
+            if (errors) {
+                let categories = await Category.findAll();
+                return res.render("show-form", {
+                    meme: req.body,
+                    categories,
+                    action: `/memes/${id}/edit`,
+                    isEdit: true,
+                    errors,
+                });
+            }
+
             res.send(error);
         }
     }
