@@ -143,6 +143,18 @@ class Controller {
             if (!meme) throw new Error("Meme not found");
             await meme.increment("votes", { by: 1 });
 
+            //* increment with  static method
+            // not recommend , cuz must findByPk again to get CategoryId
+            // await Meme.increment(
+            //     {
+            //         votes: 1,
+            //     },
+            //     {
+            //         where: { id },
+            //     },
+            // );
+            // const meme = await Meme.findByPk(id);
+
             res.redirect(`/categories/${meme.CategoryId}`);
         } catch (error) {
             console.log(error);
