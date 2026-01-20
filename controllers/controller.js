@@ -1,24 +1,28 @@
 const helper = require("../helper");
 const { Meme, Category } = require("../models");
+const { Op } = require("sequelize");
 
 class Controller {
     static async readMemes(req, res) {
         try {
+            const { q } = req.query;
             let memes = await Meme.findAll({
+                where: {
+                    title: {
+                        [Op.iLike]: `%${q}%`,
+                    },
+                },
                 include: {
                     model: Category,
                     attributes: ["name"],
                 },
             });
-            res.render("memes", { memes });
-            // experiment
-            // const memeswithStatus = memes.map((e) => {
-            //     e.status = e.showStatus();
-            //     return e;
-            // });63
-            // const status = memes.showStatus();
-            // console.log(memeswithStatus);
-            // res.send(memeswithStatus);
+            //* handle FE status
+            const memesWithStatus = memes.map((meme) => ({
+                ...meme.toJSON(),
+                status: meme.showStatus(),
+            }));
+            res.render("memes", { memesWithStatus, q });
         } catch (error) {
             console.log(error);
             res.send(error);

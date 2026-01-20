@@ -19,7 +19,8 @@
          </div>
          <nav class="navbar navbar-light bg-light">
             <form method="get" class="form-inline d-flex">
-               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q"
+                  value="<%=q%>">
                <button class=" btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
             </form>
          </nav>
@@ -38,7 +39,7 @@
             </thead>
             <tbody>
 
-               <% memes.forEach((meme,i)=> {%>
+               <% memesWithStatus.forEach((meme,i)=> {%>
                   <tr>
                      <th>
                         <img src="<%= meme.imageURL %>" alt="ini gambar">
@@ -50,7 +51,7 @@
                         <%= meme.Category.name %>
                      </td>
                      <td>
-                        <%= meme.showStatus() %>
+                        <%= meme.status %>
                      </td>
                      <td>
                         <%= "Published" %>
