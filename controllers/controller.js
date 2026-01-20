@@ -164,6 +164,13 @@ class Controller {
     static async funny(req, res) {
         try {
             let { id } = req.params;
+
+            //* instance method
+            // const meme = await Meme.findByPk(id);
+            // if (!meme) throw new Error("Meme not found");
+            // // await meme.update({ isFunny: true });
+
+            //* static method
             await Meme.update(
                 { isFunny: true },
                 {
@@ -172,8 +179,9 @@ class Controller {
                     },
                 },
             );
-            // res.send(`ini funny`);
-            res.redirect(`/categories/${id}`);
+            const meme = await Meme.findByPk(id);
+
+            res.redirect(`/categories/${meme.CategoryId}`);
         } catch (error) {
             console.log(error);
             res.send(error);
