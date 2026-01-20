@@ -51,6 +51,7 @@ class Controller {
                 ...meme.toJSON(),
                 status: meme.showStatus(),
             }));
+
             res.render("detail-categoryId", { category, memesWithStatus });
         } catch (error) {
             console.log(error);
@@ -135,16 +136,14 @@ class Controller {
     }
     static async vote(req, res) {
         try {
-            let { id } = req.params;
-            // res.send(`ini vote meme`);
+            const { id } = req.params;
 
-            await Meme.increment(
-                { votes: 1 },
-                {
-                    where: { id },
-                },
-            );
-            res.redirect(`/categories/${id}`);
+            //*increment with instance method
+            const meme = await Meme.findByPk(id);
+            if (!meme) throw new Error("Meme not found");
+            await meme.increment("votes", { by: 1 });
+
+            res.redirect(`/categories/${meme.CategoryId}`);
         } catch (error) {
             console.log(error);
             res.send(error);
