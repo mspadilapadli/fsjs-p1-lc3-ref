@@ -12,9 +12,21 @@
 <body>
     <%- include('_navbar') %>
         <div class="container">
-            <h5>
-                Category : <%= category.name %>
+            <h5 class="text-center my-3">
+                Meme List "<%= category.name %>"
             </h5>
+            <div class="d-flex justify-content-center mb-3 " style="gap: 10px;">
+                <% listCategories.forEach(el=> { %>
+
+                    <a href="/categories/<%= el.id %>"
+                        class="btn btn-outline-info <%= category.id === el.id ? 'active' : '' %> rounded-pill">
+                        <%= el.name %>
+                    </a>
+                    <% }) %>
+
+            </div>
+
+
             <div class="my-3">
                 <a href="/memes/add" class="btn btn-info">Add Meme</a>
             </div>
