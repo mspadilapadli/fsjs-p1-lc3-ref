@@ -6,7 +6,7 @@ class Controller {
     static async readMemes(req, res) {
         try {
             const { q } = req.query;
-            const { status } = req.query;
+            const { status, title } = req.query;
 
             let where = {};
             if (q) where.title = { [Op.iLike]: `%${q}%` };
@@ -25,7 +25,7 @@ class Controller {
                 publishedTime: meme.timeAgo,
             }));
 
-            res.render("memes", { memesWithStatus, q, status });
+            res.render("memes", { memesWithStatus, q, status, title });
         } catch (error) {
             console.log(error);
             res.send(error);
@@ -147,7 +147,7 @@ class Controller {
             }
             await foundMeme.update(payload);
 
-            res.redirect("/");
+            res.redirect("/?status=updated");
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
             if (errors) {
@@ -225,7 +225,9 @@ class Controller {
             const delData = await Meme.findByPk(id);
             if (!delData) throw new Error`Data not found!`();
             await delData.destroy();
-            res.redirect("/");
+            res.redirect(
+                `/?status=deleted&title=${encodeURIComponent(delData.title)}`,
+            );
         } catch (error) {
             console.log(error);
             res.send(error);

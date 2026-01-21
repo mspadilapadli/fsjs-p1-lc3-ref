@@ -71,12 +71,30 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
          const status = "<%= status || '' %>";
-         console.log("STATUS DI EJS:", status);
+         const title = "<%= title || '' %>";
 
          if (status === "added") {
             Swal.fire({
                icon: "success",
-               title: "Meme added successfully",
+               title: "Data added successfully",
+               timer: 2000,
+               showConfirmButton: false
+            });
+         }
+         if (status === "updated") {
+            Swal.fire({
+               icon: "info",
+               title: "Data updated successfully",
+               timer: 2000,
+               showConfirmButton: false
+            });
+         }
+
+         if (status === "deleted") {
+
+            Swal.fire({
+               icon: "error",
+               title: `Meme ${title} deleted successfully`,
                timer: 2000,
                showConfirmButton: false
             });
