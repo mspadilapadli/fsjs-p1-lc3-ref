@@ -197,6 +197,19 @@ class Controller {
             res.send(error);
         }
     }
+
+    static async deleteMeme(req, res) {
+        try {
+            const { id } = req.params;
+            const delData = await Meme.findByPk(id);
+            if (!delData) throw new Error`Data not found!`();
+            await delData.destroy();
+            res.redirect("/");
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
 }
 
 module.exports = Controller;

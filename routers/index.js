@@ -18,6 +18,6 @@ router.get("/memes/:id/vote", Controller.vote);
 router.get("/memes/:id/funny", Controller.funny);
 
 //delete
-router.get("/memes/:id/delete", Controller.funny);
+router.get("/memes/:id/delete", Controller.deleteMeme);
 
 module.exports = router;
