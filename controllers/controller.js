@@ -6,12 +6,10 @@ class Controller {
     static async readMemes(req, res) {
         try {
             const { q } = req.query;
+            let where = {};
+            if (q) where.title = { [Op.iLike]: `%${q}%` };
             let memes = await Meme.findAll({
-                where: {
-                    title: {
-                        [Op.iLike]: `%${q}%`,
-                    },
-                },
+                where,
                 include: {
                     model: Category,
                     attributes: ["name"],
@@ -20,8 +18,10 @@ class Controller {
             //* handle FE status
             const memesWithStatus = memes.map((meme) => ({
                 ...meme.toJSON(),
+                caption: meme.caption,
                 status: meme.showStatus(),
             }));
+            console.log(memesWithStatus);
             res.render("memes", { memesWithStatus, q });
         } catch (error) {
             console.log(error);
