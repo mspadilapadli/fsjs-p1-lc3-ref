@@ -20,6 +20,7 @@ class Controller {
                 ...meme.toJSON(),
                 caption: meme.caption,
                 status: meme.showStatus(),
+                publishedTime: meme.timeAgo,
             }));
 
             res.render("memes", { memesWithStatus, q });
@@ -106,13 +107,9 @@ class Controller {
     }
     static async postAddMeme(req, res) {
         try {
-            const { categoryId } = req.params;
             let { title, author, imageURL, CategoryId, from } = req.body;
             const payload = { title, author, imageURL, CategoryId };
             await Meme.create(payload);
-
-            console.log(payload, "<<<<<<<<<<<<< PAYLOAD");
-            console.log(categoryId, "<<<<< req.params");
 
             from === "categories"
                 ? res.redirect(`/categories/${CategoryId}`)
@@ -157,6 +154,7 @@ class Controller {
                     action: `/memes/${id}/edit`,
                     isEdit: true,
                     errors,
+                    from: req.body.from,
                 });
             }
 
