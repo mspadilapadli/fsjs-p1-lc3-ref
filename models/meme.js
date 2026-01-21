@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const helper = require("../helper");
 module.exports = (sequelize, DataTypes) => {
     class Meme extends Model {
         /**
@@ -27,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
             return status;
+        }
+        get timeAgo() {
+            return helper.timeAgo(this.createdAt);
         }
     }
     Meme.init(
