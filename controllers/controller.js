@@ -45,6 +45,7 @@ class Controller {
     static async detailMeme(req, res) {
         try {
             const { id } = req.params;
+            const { status } = req.query;
 
             const listCategories = await Category.findAll();
             //*try special isntance method sequelize
@@ -65,6 +66,7 @@ class Controller {
                 category,
                 memesWithStatus,
                 listCategories,
+                status,
             });
         } catch (error) {
             console.log(error);
@@ -114,7 +116,7 @@ class Controller {
             await Meme.create(payload);
 
             from === "categories"
-                ? res.redirect(`/categories/${CategoryId}`)
+                ? res.redirect(`/categories/${CategoryId}?status=added`)
                 : res.redirect(`/?status=added`);
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
