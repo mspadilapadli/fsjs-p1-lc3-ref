@@ -6,6 +6,8 @@ class Controller {
     static async readMemes(req, res) {
         try {
             const { q } = req.query;
+            const { status } = req.query;
+
             let where = {};
             if (q) where.title = { [Op.iLike]: `%${q}%` };
             let memes = await Meme.findAll({
@@ -23,7 +25,7 @@ class Controller {
                 publishedTime: meme.timeAgo,
             }));
 
-            res.render("memes", { memesWithStatus, q });
+            res.render("memes", { memesWithStatus, q, status });
         } catch (error) {
             console.log(error);
             res.send(error);
@@ -113,7 +115,7 @@ class Controller {
 
             from === "categories"
                 ? res.redirect(`/categories/${CategoryId}`)
-                : res.redirect(`/`);
+                : res.redirect(`/?status=added`);
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
             if (errors) {
