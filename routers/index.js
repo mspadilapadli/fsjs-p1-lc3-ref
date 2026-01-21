@@ -10,6 +10,8 @@ router.get("/categories/:id", Controller.detailMeme);
 //add
 router.get("/memes/add", Controller.showForm);
 router.post("/memes/add", Controller.postAddMeme);
+router.get("/categories/:categoryId/add-meme", Controller.showForm);
+router.post("/categories/:categoryId/add-meme", Controller.postAddMeme);
 
 //edit
 router.get("/memes/:id/edit", Controller.showForm);

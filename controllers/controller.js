@@ -21,7 +21,7 @@ class Controller {
                 caption: meme.caption,
                 status: meme.showStatus(),
             }));
-            console.log(memesWithStatus);
+
             res.render("memes", { memesWithStatus, q });
         } catch (error) {
             console.log(error);
@@ -70,12 +70,22 @@ class Controller {
     }
     static async showForm(req, res) {
         try {
-            const { id } = req.params;
+            const { id, categoryId } = req.params;
+            //handle add from memes
             let categories = await Category.findAll();
             let meme = {};
             let action = `/memes/add`;
             let isEdit = false;
+            let from = "memes";
 
+            //handle add from detail category
+            if (categoryId) {
+                action = `/categories/${categoryId}/add-meme`;
+                meme.CategoryId = categoryId;
+                from = "categories";
+            }
+
+            //hanle edit
             if (id) {
                 meme = await Meme.findByPk(id);
                 action = `/memes/${id}/edit`;
@@ -87,6 +97,7 @@ class Controller {
                 action,
                 errors: {},
                 meme,
+                from,
             });
         } catch (error) {
             console.log(error);
@@ -95,10 +106,17 @@ class Controller {
     }
     static async postAddMeme(req, res) {
         try {
-            let { title, author, imageURL, CategoryId } = req.body;
+            const { categoryId } = req.params;
+            let { title, author, imageURL, CategoryId, from } = req.body;
             const payload = { title, author, imageURL, CategoryId };
             await Meme.create(payload);
-            res.redirect(`/`);
+
+            console.log(payload, "<<<<<<<<<<<<< PAYLOAD");
+            console.log(categoryId, "<<<<< req.params");
+
+            from === "categories"
+                ? res.redirect(`/categories/${CategoryId}`)
+                : res.redirect(`/`);
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
             if (errors) {
@@ -109,6 +127,7 @@ class Controller {
                     action: `/memes/add`,
                     isEdit: false,
                     errors,
+                    from: req.body.from,
                 });
             }
 

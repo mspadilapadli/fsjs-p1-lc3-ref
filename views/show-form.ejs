@@ -62,7 +62,8 @@
                             </small>
                             <% } %>
                     </label>
-                    <select class="form-select <%= errors.CategoryId ? 'is-invalid' : '' %>" name="CategoryId">
+                    <select class="form-select <%= errors.CategoryId ? 'is-invalid' : '' %>" <%=meme.CategoryId
+                        ? "disabled" : "" %> name="CategoryId">
                         <option value="" hidden> Choose the category</option>
                         <% categories.forEach((category)=>{ %>
                             <option value="<%= category.id %>" <%=meme.CategoryId==category.id ? "selected" : "" %>>
@@ -71,10 +72,18 @@
                             <%})%>
                     </select>
                 </div>
+                <!-- Lock option category -->
+                <% if (meme.CategoryId) { %>
+                    <input type="hidden" name="CategoryId" value="<%= meme.CategoryId %>">
+                    <% } %>
 
-                <button type="submit" class="btn btn-info">
-                    <%= isEdit ? "Update" : "Add" %>
-                </button>
+                        <input type="hidden" name="from" value="<%= from %>">
+
+
+
+                        <button type="submit" class="btn btn-info">
+                            <%= isEdit ? "Update" : "Add" %>
+                        </button>
             </form>
         </div>
 
