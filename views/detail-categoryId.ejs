@@ -17,20 +17,15 @@
             </h5>
             <div class="d-flex justify-content-center mb-3 " style="gap: 10px;">
                 <% listCategories.forEach(el=> { %>
-
                     <a href="/categories/<%= el.id %>"
                         class="btn btn-outline-info <%= category.id === el.id ? 'active' : '' %> rounded-pill">
                         <%= el.name %>
                     </a>
                     <% }) %>
-
             </div>
-
-
             <div class="my-3">
                 <a href="/categories/<%= category.id %>/add-meme" class="btn btn-info">Add Meme</a>
             </div>
-
             <table class="table table-striped fixed-table">
                 <thead>
                     <tr class="table-info">
@@ -40,14 +35,11 @@
                         <th scope="col">Total Vote</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
-
                     </tr>
                 </thead>
                 <tbody>
-
                     <% memesWithStatus.forEach((meme)=> { %>
                         <tr>
-
                             <td>
                                 <img src="<%= meme.imageURL %>" alt="ini gambar">
                             </td>
@@ -65,19 +57,15 @@
                             </td>
                             <td>
                                 <% if (meme.votes>= 10) { %>
-
                                     <a class="btn btn-outline-info" href="/memes/<%= meme.id %>/funny">IsFunny</a>
                                     <% } else { %>
-
                                         <a class="btn btn-outline-success" href="/memes/<%= meme.id %>/vote">Vote</a>
                                         <%} %>
                             </td>
-
                         </tr>
                         <% }) %>
                 </tbody>
             </table>
-
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
