@@ -17,6 +17,7 @@ class Controller {
                     attributes: ["name"],
                 },
             });
+
             //* handle FE status
             const memesWithStatus = memes.map((meme) => ({
                 ...meme.toJSON(),
@@ -27,18 +28,14 @@ class Controller {
 
             res.render("memes", { memesWithStatus, q, status, title });
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
     static async readCategories(req, res) {
         try {
             const categories = await Category.findAll();
-
             res.render("categories", { categories });
-            // res.send(categories);
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
@@ -46,8 +43,8 @@ class Controller {
         try {
             const { id } = req.params;
             const { status } = req.query;
-
             const listCategories = await Category.findAll();
+
             //*try special isntance method sequelize
             const category = await Category.findByPk(id);
             const memes = await category.getMemes({
@@ -56,7 +53,8 @@ class Controller {
                 },
                 order: [["title", "ASC"]],
             });
-            //*experiment
+
+            //* experiment
             const memesWithStatus = memes.map((meme) => ({
                 ...meme.toJSON(),
                 status: meme.showStatus(),
@@ -69,33 +67,34 @@ class Controller {
                 status,
             });
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
     static async showForm(req, res) {
         try {
             const { id, categoryId } = req.params;
-            //handle add from memes
+
+            //* handle add from memes
             let categories = await Category.findAll();
             let meme = {};
             let action = `/memes/add`;
             let isEdit = false;
             let from = "memes";
 
-            //handle add from detail category
+            //* handle add from detail category
             if (categoryId) {
                 action = `/categories/${categoryId}/add-meme`;
                 meme.CategoryId = categoryId;
                 from = "categories";
             }
 
-            //hanle edit
+            //* handle edit
             if (id) {
                 meme = await Meme.findByPk(id);
                 action = `/memes/${id}/edit`;
                 isEdit = true;
             }
+
             res.render("show-form", {
                 categories,
                 isEdit,
@@ -105,7 +104,6 @@ class Controller {
                 from,
             });
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
@@ -114,7 +112,6 @@ class Controller {
             let { title, author, imageURL, CategoryId, from } = req.body;
             const payload = { title, author, imageURL, CategoryId };
             await Meme.create(payload);
-
             from === "categories"
                 ? res.redirect(`/categories/${CategoryId}?status=added`)
                 : res.redirect(`/?status=added`);
@@ -131,7 +128,6 @@ class Controller {
                     from: req.body.from,
                 });
             }
-
             res.send(error);
         }
     }
@@ -146,7 +142,6 @@ class Controller {
                 throw `Data not found!`;
             }
             await foundMeme.update(payload);
-
             res.redirect("/?status=updated");
         } catch (error) {
             const errors = helper.formatValdiateErrors(error);
@@ -161,7 +156,6 @@ class Controller {
                     from: req.body.from,
                 });
             }
-
             res.send(error);
         }
     }
@@ -188,7 +182,6 @@ class Controller {
 
             res.redirect(`/categories/${meme.CategoryId}`);
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
@@ -214,7 +207,6 @@ class Controller {
 
             res.redirect(`/categories/${meme.CategoryId}`);
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
@@ -229,7 +221,6 @@ class Controller {
                 `/?status=deleted&title=${encodeURIComponent(delData.title)}`,
             );
         } catch (error) {
-            console.log(error);
             res.send(error);
         }
     }
